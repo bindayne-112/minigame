@@ -18,11 +18,15 @@ function startSpin() {
     fetch(`${SCRIPT_URL}?sdt=${phone}`)
       .then(res => res.text())
       .then(text => {
-        resultDiv.textContent = (text === "Trúng") 
-          ? "🎉 Chúc mừng! Bạn đã TRÚNG THƯỞNG!" 
-          : (text === "Bạn đã quay hôm nay")
-            ? "⏱ Bạn đã quay hôm nay. Hãy thử lại vào ngày mai!"
-            : "❌ Rất tiếc! Bạn chưa trúng lần này.";
+        if (text === "Trúng") {
+          resultDiv.textContent = "🎉 Chúc mừng! Bạn đã TRÚNG THƯỞNG!";
+        } else if (text === "Bạn đã quay hôm nay") {
+          resultDiv.textContent = "⏱ Bạn đã quay hôm nay. Hãy thử lại vào ngày mai!";
+        } else if (text === "Đã đủ số người trúng hôm nay, hẹn bạn ngày mai!") {
+          resultDiv.textContent = "🎯 Đã đủ số người trúng hôm nay, hẹn bạn ngày mai!";
+        } else {
+          resultDiv.textContent = "❌ Rất tiếc! Bạn chưa trúng lần này.";
+        }
         wheel.style.display = "none";
       })
       .catch(err => {
